@@ -16,6 +16,10 @@ body {
     width: 300px;
     margin-right: 10px;
 }
+table th:first-child, table td:first-child {
+    width: 30px;
+    text-align: center;
+}
 table {
     border-collapse: collapse;
     margin-top: 20px;

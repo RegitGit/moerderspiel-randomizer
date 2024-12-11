@@ -17,6 +17,7 @@ const handleNameInput = () => {
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'X';
+        deleteButton.tabIndex = "-1";
         deleteButton.onclick = () => deleteNameField(deleteButton);
         newContainer.appendChild(deleteButton);
 
@@ -60,6 +61,10 @@ const randomizeNames = () => {
 
     for (let i = 0; i < names.length; i++) {
         const row = document.createElement('tr');
+
+        const cell0 = document.createElement('td');
+        cell0.textContent = i + 1 + "."; // Row number
+        row.appendChild(cell0);
 
         const cell1 = document.createElement('td');
         cell1.textContent = names[i];

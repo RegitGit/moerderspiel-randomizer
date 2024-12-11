@@ -12,7 +12,7 @@
     <div class="entry">
         <div class="name-container">
             <input type="text" class="name-field" placeholder="Name hinzufügen" oninput="handleNameInput()">
-            <button onclick="deleteNameField(this)">X</button>
+            <button tabindex="-1" onclick="deleteNameField(this)">X</button>
         </div>
     </div>
 
@@ -25,6 +25,7 @@
         <table>
             <thead>
                 <tr>
+                    <th></th>
                     <th>Mörder</th>
                     <th>Opfer</th>
                 </tr>
