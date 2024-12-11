@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mörderspiel Namengenerator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Mörderspiel Opfer ohne Kreise</h1>
+
+    <div class="entry">
+        <div class="name-container">
+            <input type="text" class="name-field" placeholder="Name hinzufügen" oninput="handleNameInput()">
+            <button onclick="deleteNameField(this)">X</button>
+        </div>
+    </div>
+
+    <button onclick="randomizeNames()">Randomisieren</button>
+    <label>
+        <input type="checkbox" id="visibility-toggle" onchange="setTableVisibility(this.checked)"> Tabelle anzeigen
+    </label>
+
+    <div id="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Mörder</th>
+                    <th>Opfer</th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
