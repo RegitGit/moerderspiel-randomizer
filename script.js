@@ -1,3 +1,6 @@
+//const { default: jsPDF } = require("jspdf");
+
+
 let isTableVisible = false;
 
 const handleNameInput = () => {
@@ -38,9 +41,11 @@ const deleteNameField = (button) => {
     }
 };
 
+var names;
+
 const randomizeNames = () => {
     const nameFields = document.querySelectorAll('.name-field');
-    const names = Array.from(nameFields)
+    names = Array.from(nameFields)
         .map(field => field.value.trim())
         .filter(name => name !== ''); // Filter out empty inputs
 
@@ -86,3 +91,40 @@ const setTableVisibility = (isVisible) => {
     isTableVisible = isVisible;
     document.getElementById('table-container').style.display = isVisible ? 'block' : 'none';
 };
+
+
+// PDF GENERATION
+const generatePDF = () => {
+    const pdf = new jsPDF();
+    
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+
+    // Border
+    ctx.fillRect(0, 0, c.width, c.height)
+
+    // Murderer Text
+    ctx.font = "14px Arial";
+    ctx.textAlign = "center";
+    for (var i = 0; i < names.length; i++) {
+        if (i !== 0 && i % 16 === 0) {
+            pdf.addPage();
+        }
+        ctx.clearRect(1, 1, c.width - 2, c.height - 2)
+        ctx.strokeText(names[i], c.width / 2, 30);
+
+        // Victim Text
+        ctx.font = "12px Arial";
+        var victimText = document.getElementById("victim-text-field").value;
+        if (victimText !== "") {
+            victimText += ": ";
+        }
+        ctx.strokeText(victimText + names[(i + 1) % names.length], c.width / 2, 120);
+        
+        var imgData = c.toDataURL("image/png");
+        pdf.addImage(imgData, "PNG", 12 + (92 * ((i % 16) % 2)), 8 + 35 * Math.floor((i % 16) / 2));
+    }
+    pdf.save("abc")
+    
+    
+}
