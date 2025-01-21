@@ -11,6 +11,12 @@ body {
     flex-direction: column;
 }
 
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 #prompt-headline {
     margin-right: 10px;
 }
@@ -27,8 +33,9 @@ body {
 
 #prompt-input {
     margin-top: 5px;
-    width: 300px;
+    min-height: 80px;
     height: 100%;
+    min-width: 300px;
 }
 
 .name-container {

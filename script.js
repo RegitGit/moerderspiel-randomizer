@@ -136,6 +136,25 @@ const setTableVisibility = (isVisible) => {
     }
 };
 
+
+const savePromptFile = () => {
+        var fileName = "Aufgaben.txt";
+        var fileContent = "";
+        var myFile;
+
+        var dlBtn = document.getElementById("save-prompt-button");
+        window.URL = window.URL || window.webkitURL;
+        fileContent = document.getElementById("prompt-input").value;
+        console.log(fileContent)
+        myFile = new Blob([fileContent], {type: 'text/plain'});
+        dlBtn.setAttribute("href", window.URL.createObjectURL(myFile));
+        dlBtn.setAttribute("download", fileName);
+    }
+
+    
+
+
+
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 
