@@ -2,15 +2,41 @@ body {
     font-family: Arial, sans-serif;
     margin: 20px;
 }
-.entry {
+.flex-div {
+    display: flex;
+}
+
+#name-column {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
 }
+
+#prompt-headline {
+    margin-right: 10px;
+}
+
+#seperator-input {
+    width: 20px;
+}
+
+#prompt-container {
+    padding-left: 10px;
+    border-color: black;
+    border-left: solid 2px;
+}
+
+#prompt-input {
+    margin-top: 5px;
+    width: 300px;
+    height: 100%;
+}
+
 .name-container {
     display: flex;
+    
     align-items: center;
     margin-bottom: 10px;
+    margin-right: 10px;
 }
 .name-field {
     width: 300px;
@@ -33,6 +59,10 @@ th, td {
     text-align: left;
 }
 #table-container {
-    display: none;
     margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.hide-table {
+    display: none;
 }
