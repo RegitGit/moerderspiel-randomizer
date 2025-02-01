@@ -17,6 +17,15 @@ body {
     height: 100%;
 }
 
+.flex-column > * {
+    margin-bottom: 2px;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
 #prompt-headline {
     margin-right: 10px;
 }
@@ -36,6 +45,14 @@ body {
     min-height: 80px;
     height: 100%;
     min-width: 300px;
+}
+
+#myCanvas {
+    margin-right: 10px;
+}
+
+.input-text {
+    width: 300px;
 }
 
 .name-container {

@@ -158,9 +158,8 @@ const savePromptFile = () => {
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 
-
 // PDF GENERATION
-const generatePDF = (doublesided = false) => {
+const generatePDF = () => {
     const pdf = new jsPDF();
 
     clearCanvasImg();
@@ -204,6 +203,12 @@ const generatePDF = (doublesided = false) => {
     }
     defaultCanvas();
     pdf.save("abc")
+}
+
+var doublesided = false;
+
+const toggleDoublesided = () => {
+    doublesided = !doublesided;
 }
 
 const getPrompts = () => {

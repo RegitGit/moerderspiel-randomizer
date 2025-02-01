@@ -48,9 +48,21 @@
             <tbody id="table-body" class="hide-table"></tbody>
         </table>
     </div>
-    <canvas id="myCanvas" width="350" height="133"></canvas>
-    <input type="text" id="victim-text-field" placeholder="Opfer Bezeichnung" value="Opfer">
-    <button onclick="generatePDF()">Generiere PDF</button>
+
+    <h2>PDF Generierung</h2>
+    <div class="flex-row">
+        <canvas id="myCanvas" width="350" height="133"></canvas>
+        <div class="flex-column">
+            Mörder Präfix
+            <input type="text" id="murderer-text-field" class="input-text" placeholder="Mörder Präfix eingeben">
+            Opfer Präfix
+            <input type="text" id="victim-text-field" class="input-text" placeholder="Opfer Präfix eingeben" value="Opfer">
+            <label>
+                <input type="checkbox" id="mirrored-toggle" onchange="toggleDoublesided()"> Rückseite generieren
+            </label>
+            <button onclick="generatePDF()">Generiere PDF</button>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
