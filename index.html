@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <button onclick="randomizeNames()">Randomisieren</button>
+    <button onclick="randomizeNames()" disabled>Randomisieren</button>
     <label>
         <input type="checkbox" id="visibility-toggle" onchange="setTableVisibility(this.checked)"> Tabelle anzeigen
     </label>
@@ -56,11 +56,43 @@
             Mörder Präfix
             <input type="text" id="murderer-text-field" class="input-text" placeholder="Mörder Präfix eingeben">
             Opfer Präfix
-            <input type="text" id="victim-text-field" class="input-text" placeholder="Opfer Präfix eingeben" value="Opfer">
+            <input type="text" id="victim-text-field" class="input-text" placeholder="Opfer Präfix eingeben" value="Opfer: ">
             <label>
                 <input type="checkbox" id="mirrored-toggle" onchange="toggleDoublesided()"> Rückseite generieren
             </label>
             <button onclick="generatePDF()">Generiere PDF</button>
+        </div>
+        <div class="flex-column">
+            <select name="font" id="font" onchange="adjustedCanvas()">
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Trebuchet MS">Trebuchet MS</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Garamond">Garamond</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Brush Script MT">Brush Script MT</option>
+              </select>
+              <label>    
+                  Schriftgröße <input type="range" min="4" max="40" value="14" class="slider" id="font-size-slider" oninput="adjustedCanvas()">
+              </label>
+              <div class="flex-row">
+                <label>
+                  <input type="checkbox" id="bold-toggle" checked="true" onchange="adjustedCanvas()"> fett
+                </label>
+                <label>
+                  <input type="checkbox" id="italic-toggle" onchange="adjustedCanvas()"> kursiv
+                </label>
+              </div>
+              <div class="flex-row">
+                <input type="range" min="0" max="350" value="175" default="175" class="slider" id="text-x-axis" oninput="adjustedCanvas()" ondblclick="resetSlider(this)">
+                <div class="rotation-wrapper-outer">
+                    <div class="rotation-wrapper-inner">
+                <input type="range" min="0" max="133" value="103" default="103" class="slider" id="text-y-axis" oninput="adjustedCanvas()" ondblclick="resetSlider(this)">
+                    </div>
+                </div>
+              </div>
+
         </div>
     </div>
     <script src="script.js"></script>

@@ -15,6 +15,8 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    margin-right: 4px;
+
 }
 
 .flex-column > * {
@@ -49,6 +51,16 @@ body {
 
 #myCanvas {
     margin-right: 10px;
+    height: 133px;
+}
+
+#text-x-axis {
+    margin-top: 46px;
+    width: 100%;
+}
+
+#text-y-axis {
+    width: 60px;
 }
 
 .input-text {
@@ -89,4 +101,22 @@ th, td {
 
 .hide-table {
     display: none;
+}
+
+.rotation-wrapper-outer {
+    display: table;
+  }
+.rotation-wrapper-inner {
+padding: 50% 0;
+height: 0;
+}
+
+#text-y-axis {
+    display: block;
+    transform-origin: top left;
+  /* Note: for a CLOCKWISE rotation, use the commented-out
+     transform instead of this one. */
+  transform: rotate(-90deg) translate(-100%);
+  /* transform: rotate(90deg) translate(0, -100%); */
+  margin-top: -50%;
 }

@@ -167,7 +167,7 @@ const generatePDF = () => {
     const table = document.getElementById("table-body");
 
     // Murderer Text
-    ctx.font = "14px Arial";
+    ctx.font = "bold 14px Arial";
     ctx.textAlign = "center";
     for (var i = 0; i < table.children.length; i++) {
         if (i !== 0 && i % 16 === 0) {
@@ -175,11 +175,6 @@ const generatePDF = () => {
                 addBackside(pdf, 16);
             }
             pdf.addPage();
-        }
-
-        var victimText = document.getElementById("victim-text-field").value;
-        if (victimText !== "") {
-            victimText += ": ";
         }
 
         var murderName = "";
@@ -190,7 +185,7 @@ const generatePDF = () => {
         victimName = tr.children[2].innerHTML;
         prompt = tr.children[3].innerHTML;
 
-        setCanvasImg(murderName, [c.width / 2, 30], victimText + victimName, [c.width / 2, 120], prompt, [c.width / 2 - promptWidth / 2, 70 - promptHeight / 2]);
+        setCanvasImg(murdererText + murderName, [c.width / 2, 30], victimText + victimName, [c.width / 2, 120], prompt, [c.width / 2 - promptWidth / 2, 70 - promptHeight / 2]);
         
         var imgData = c.toDataURL("image/png");
         pdf.addImage(imgData, "PNG", 12 + (92 * ((i % 16) % 2)), 8 + 35 * Math.floor((i % 16) / 2));
@@ -239,18 +234,21 @@ const clearCanvasImg = () => {
     ctx.clearRect(1, 1, c.width - 2, c.height - 2)
 }
 
+const addTextToCanvas = (font, text, coords) => {
+    ctx.font = font;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(text, coords[0], coords[1]);
+}
+
 const setCanvasImg = (murderName, murderCoords, victimName, victimCoords, prompt, promptCoords) => {
     clearCanvasImg();
 
-    ctx.font = "bold 14px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText(murderName, murderCoords[0], murderCoords[1]);
-    
-    ctx.font = "bold 12px Arial";
-    ctx.fillText(victimName, victimCoords[0], victimCoords[1]);
+    let fontStyle = (document.getElementById("bold-toggle").checked ? "bold " : "") + (document.getElementById("italic-toggle").checked ? "italic " : "");
+
+    addTextToCanvas(fontStyle + document.getElementById("font-size-slider").value + "px " + document.getElementById("font").value, murderName, [Number(document.getElementById("text-x-axis").value), 133 - Number(document.getElementById("text-y-axis").value)])
 
     if (prompt !== "") {
-        ctx.font = "10px Arial";
         const { height } = drawText(ctx, prompt, {
             x: promptCoords[0],
             y: promptCoords[1],
@@ -260,8 +258,10 @@ const setCanvasImg = (murderName, murderCoords, victimName, victimCoords, prompt
             align: "center",
             vAlign: "middle",
             debug:false
-          })
+        })
     }
+    
+    addTextToCanvas(fontStyle + document.getElementById("font-size-slider").value + "px " + document.getElementById("font").value, victimName, victimCoords)
 }
 
 const { drawText, getTextHeight, splitText } = window.canvasTxt;
@@ -270,7 +270,17 @@ var promptWidth = 280;
 var promptHeight = 50;
 
 const defaultCanvas = () => {
-    setCanvasImg("Mördername", [c.width / 2, 30], "Opfername", [c.width / 2, 120], "Hier steht die Aufgabe oder ein Gegenstand", [c.width / 2 - promptWidth / 2, 70 - promptHeight / 2]);
+    document.getElementById("text-x-axis").value = c.width / 2;
+    setCanvasImg("Mördername", [c.width / 2, 103], "Opfername", [c.width / 2, 120], "Hier steht die Aufgabe oder ein Gegenstand, falls sie existieren", [c.width / 2 - promptWidth / 2, 70 - promptHeight / 2]);
+}
+
+const adjustedCanvas = () => {
+    setCanvasImg("Mördername", [c.width / 2, 103], "Opfername", [c.width / 2, 120], "Hier steht die Aufgabe oder ein Gegenstand, falls sie existieren", [c.width / 2 - promptWidth / 2, 70 - promptHeight / 2]);
+}
+
+const resetSlider = (slider) => {
+    slider.value = slider.getAttribute("default");
+    adjustedCanvas();
 }
 
 defaultCanvas();
