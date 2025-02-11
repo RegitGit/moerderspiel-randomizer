@@ -26,6 +26,9 @@ const handleNameInput = () => {
 
         document.getElementById('name-column').appendChild(newContainer);
     }
+    if (nameFields.length > 1) {
+        document.getElementById("randomizeButton").disabled = false;
+    }
 };
 
 const deleteNameField = (button) => {
@@ -35,6 +38,9 @@ const deleteNameField = (button) => {
     const nameContainers = document.querySelectorAll('.name-container');
     if (nameContainers[nameContainers.length - 1] !== container) {
         container.remove();
+        if (document.querySelectorAll('.name-container').length < 3) {
+            document.getElementById("randomizeButton").disabled = true;
+        }
     }
     else {
         inputField.value = '';
