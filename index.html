@@ -52,17 +52,14 @@
     <h2>PDF Generierung</h2>
     <div class="flex-row">
         <canvas id="myCanvas" width="350" height="133"></canvas>
-        <div class="flex-column">
-            Mörder Präfix
-            <input type="text" id="murderer-text-field" class="input-text" placeholder="Mörder Präfix eingeben">
-            Opfer Präfix
-            <input type="text" id="victim-text-field" class="input-text" placeholder="Opfer Präfix eingeben" value="Opfer: ">
-            <label>
-                <input type="checkbox" id="mirrored-toggle" onchange="toggleDoublesided()"> Rückseite generieren
-            </label>
-            <button onclick="generatePDF()">Generiere PDF</button>
+        <div id="adjust-parent" class="flex-column">
+            Text anpassen:
+            <button id="murderer-adjust-btn" disabled caseId="0" onclick="switchAdjustingText(this)">Mörder</button>
+            <button id="prompt-adjust-btn" caseId="2" onclick="switchAdjustingText(this)">Aufgabe</button>
+            <button id="victim-adjust-btn" caseId="1" onclick="switchAdjustingText(this)">Opfer</button>
         </div>
         <div class="flex-column">
+            <input type="text" id="prefix-text-field" placeholder="Präfix eingeben" oninput="adjustedCanvas()">
             <select name="font" id="font" onchange="adjustedCanvas()">
                 <option value="Arial">Arial</option>
                 <option value="Verdana">Verdana</option>
@@ -74,7 +71,7 @@
                 <option value="Brush Script MT">Brush Script MT</option>
               </select>
               <label>    
-                  Schriftgröße <input type="range" min="4" max="40" value="14" class="slider" id="font-size-slider" oninput="adjustedCanvas()">
+                  Schriftgröße <input type="range" min="4" max="40" value="14" default="14" class="slider" id="font-size-slider" oninput="adjustedCanvas()" ondblclick="resetSlider(this)">
               </label>
               <div class="flex-row">
                 <label>
@@ -92,9 +89,13 @@
                     </div>
                 </div>
               </div>
-
         </div>
     </div>
+    <label>
+        <input type="checkbox" id="mirrored-toggle" onchange="toggleDoublesided()"> Rückseite generieren
+    </label>
+    <button id="generate-btn" disabled title="Randomisiere zuerst die Namen!" onclick="generatePDF()">Generiere PDF</button>
+
     <script src="script.js"></script>
 </body>
 </html>

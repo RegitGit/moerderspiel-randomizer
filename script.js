@@ -25,9 +25,10 @@ const handleNameInput = () => {
         newContainer.appendChild(deleteButton);
 
         document.getElementById('name-column').appendChild(newContainer);
-    }
-    if (nameFields.length > 1) {
-        document.getElementById("randomizeButton").disabled = false;
+
+        if (nameFields.length > 1) {
+            document.getElementById("randomizeButton").disabled = false;
+        }
     }
 };
 
@@ -69,9 +70,7 @@ const randomizeNames = () => {
     const length = allPrompts.length;
     var distributionArray = new Int16Array(length);
     const amount = Math.floor(names.length / length);
-    console.log("am: " + amount)
     var rest = names.length % length;
-    console.log("rest: " + rest)
 
     var randomPrompts = [];
     for (let i = 0; i < distributionArray.length; i++) {
@@ -118,6 +117,9 @@ const randomizeNames = () => {
         tableBody.appendChild(row);
     }
 
+    document.getElementById('generate-btn').disabled = false;
+    document.getElementById('generate-btn').title = "";
+
     if (isTableVisible) {
         document.getElementById('table-container').style.display = 'block';
     }
@@ -151,7 +153,6 @@ const savePromptFile = () => {
         var dlBtn = document.getElementById("save-prompt-button");
         window.URL = window.URL || window.webkitURL;
         fileContent = document.getElementById("prompt-input").value;
-        console.log(fileContent)
         myFile = new Blob([fileContent], {type: 'text/plain'});
         dlBtn.setAttribute("href", window.URL.createObjectURL(myFile));
         dlBtn.setAttribute("download", fileName);
@@ -173,7 +174,7 @@ const generatePDF = () => {
     const table = document.getElementById("table-body");
 
     // Murderer Text
-    ctx.font = "bold 14px Arial";
+    ctx.font = "bold " + murdererFontSize + " Arial";
     ctx.textAlign = "center";
     for (var i = 0; i < table.children.length; i++) {
         if (i !== 0 && i % 16 === 0) {
@@ -191,7 +192,7 @@ const generatePDF = () => {
         victimName = tr.children[2].innerHTML;
         prompt = tr.children[3].innerHTML;
 
-        setCanvasImg(murdererText + murderName, [c.width / 2, 30], victimText + victimName, [c.width / 2, 120], prompt, [c.width / 2 - promptWidth / 2, 70 - promptHeight / 2]);
+        setCanvasImg(murderName, victimName, prompt);
         
         var imgData = c.toDataURL("image/png");
         pdf.addImage(imgData, "PNG", 12 + (92 * ((i % 16) % 2)), 8 + 35 * Math.floor((i % 16) / 2));
@@ -203,7 +204,7 @@ const generatePDF = () => {
         clearCanvasImg();
     }
     defaultCanvas();
-    pdf.save("abc")
+    pdf.save("murdergame_druck")
 }
 
 var doublesided = false;
@@ -247,27 +248,27 @@ const addTextToCanvas = (font, text, coords) => {
     ctx.fillText(text, coords[0], coords[1]);
 }
 
-const setCanvasImg = (murderName, murderCoords, victimName, victimCoords, prompt, promptCoords) => {
+const setCanvasImg = (murderName, victimName, prompt) => {
     clearCanvasImg();
 
-    let fontStyle = (document.getElementById("bold-toggle").checked ? "bold " : "") + (document.getElementById("italic-toggle").checked ? "italic " : "");
-
-    addTextToCanvas(fontStyle + document.getElementById("font-size-slider").value + "px " + document.getElementById("font").value, murderName, [Number(document.getElementById("text-x-axis").value), 133 - Number(document.getElementById("text-y-axis").value)])
+    addTextToCanvas(murdererFontStyle + " " + murdererFontSize + " " + murdererFontType, murdererValueText + murderName, [murdererValueX, murdererValueY])
 
     if (prompt !== "") {
-        const { height } = drawText(ctx, prompt, {
-            x: promptCoords[0],
-            y: promptCoords[1],
+        const { height } = drawText(ctx, promptValueText + prompt, {
+            x: Number(promptValueX),
+            y: Number(promptValueY),
             width: promptWidth,
             height: promptHeight,
-            fontSize: 12,
+            font: promptFontType,
+            fontSize: Number(promptFontSize),
+            fontStyle: promptFontStyle,
             align: "center",
             vAlign: "middle",
             debug:false
         })
     }
     
-    addTextToCanvas(fontStyle + document.getElementById("font-size-slider").value + "px " + document.getElementById("font").value, victimName, victimCoords)
+    addTextToCanvas(victimFontStyle + " " + victimFontSize + " " + victimFontType, victimValueText + victimName, [victimValueX, victimValueY])
 }
 
 const { drawText, getTextHeight, splitText } = window.canvasTxt;
@@ -276,12 +277,40 @@ var promptWidth = 280;
 var promptHeight = 50;
 
 const defaultCanvas = () => {
-    document.getElementById("text-x-axis").value = c.width / 2;
-    setCanvasImg("Mördername", [c.width / 2, 103], "Opfername", [c.width / 2, 120], "Hier steht die Aufgabe oder ein Gegenstand, falls sie existieren", [c.width / 2 - promptWidth / 2, 70 - promptHeight / 2]);
+    adjustedCanvas();
 }
 
 const adjustedCanvas = () => {
-    setCanvasImg("Mördername", [c.width / 2, 103], "Opfername", [c.width / 2, 120], "Hier steht die Aufgabe oder ein Gegenstand, falls sie existieren", [c.width / 2 - promptWidth / 2, 70 - promptHeight / 2]);
+    switch(currentlyAdjusting) {
+        // 0 = Murderer
+        case 0:
+            murdererValueText = document.getElementById("prefix-text-field").value;
+            murdererValueX = document.getElementById("text-x-axis").value;
+            murdererValueY = 133 - document.getElementById("text-y-axis").value;
+            murdererFontStyle = (document.getElementById("bold-toggle").checked ? "bold " : "") + (document.getElementById("italic-toggle").checked ? "italic " : "");
+            murdererFontType = document.getElementById("font").value;
+            murdererFontSize = document.getElementById("font-size-slider").value +"px";
+            break;
+        // 1 = Victim
+        case 1:
+            victimValueText = document.getElementById("prefix-text-field").value;
+            victimValueX = document.getElementById("text-x-axis").value;
+            victimValueY = 133 - document.getElementById("text-y-axis").value;
+            victimFontStyle = (document.getElementById("bold-toggle").checked ? "bold " : "") + (document.getElementById("italic-toggle").checked ? "italic " : "");
+            victimFontType = document.getElementById("font").value;
+            victimFontSize = document.getElementById("font-size-slider").value + "px";
+            break;
+        // 2 = Prompt
+        case 2:
+            promptValueText = document.getElementById("prefix-text-field").value;
+            promptValueX = document.getElementById("text-x-axis").value - promptWidth / 2;
+            promptValueY = 133 - document.getElementById("text-y-axis").value - promptHeight / 2;
+            promptFontStyle = (document.getElementById("bold-toggle").checked ? "bold " : "") + (document.getElementById("italic-toggle").checked ? "italic " : "");
+            promptFontType = document.getElementById("font").value;
+            promptFontSize = document.getElementById("font-size-slider").value;
+            break;
+    }
+    setCanvasImg("\"Mördername\"", "\"Opfername\"", "Hier steht die Aufgabe oder ein Gegenstand, falls sie existieren");
 }
 
 const resetSlider = (slider) => {
@@ -289,4 +318,71 @@ const resetSlider = (slider) => {
     adjustedCanvas();
 }
 
+let currentlyAdjusting = 0;
+let murdererValueText = "";
+let murdererValueX = c.width / 2;
+let murdererValueY = 133 - 103;
+let murdererFontStyle = "bold";
+let murdererFontType = "Arial";
+let murdererFontSize = "14px";
+let victimValueText = "Opfer: ";
+let victimValueX = c.width / 2;
+let victimValueY = 133 - 18;
+let victimFontStyle = "bold";
+let victimFontType = "Arial";
+let victimFontSize = "14px";
+let promptValueText = "";
+let promptValueX = c.width / 2 - promptWidth / 2;
+let promptValueY = 70 - promptHeight / 2;
+let promptFontStyle = "";
+let promptFontType = "Arial";
+let promptFontSize = 12;
+
+document.getElementById("text-x-axis").value = murdererValueX;
 defaultCanvas();
+
+const switchAdjustingText = (btn) => {
+    currentlyAdjusting = Number(btn.getAttribute("caseId"));
+    let adjustParent = document.getElementById("adjust-parent");
+    for (let i = 0; i < adjustParent.children.length; i++) {
+        let element = adjustParent.children[i];
+        if (Number(element.getAttribute("caseId")) !== currentlyAdjusting) {
+            element.disabled = false;
+        }
+        else {
+            element.disabled = true;
+        }
+    }
+    switch (currentlyAdjusting) {
+        // 0 = Murderer
+        case 0:
+            document.getElementById("prefix-text-field").value = murdererValueText;
+            document.getElementById("text-x-axis").value = murdererValueX;
+            document.getElementById("text-y-axis").value = 133 - murdererValueY;
+            document.getElementById("bold-toggle").checked = murdererFontStyle.includes("bold");
+            document.getElementById("italic-toggle").checked = murdererFontStyle.includes("italic");
+            document.getElementById("font").value = murdererFontType;
+            document.getElementById("font-size-slider").value = murdererFontSize.replace("px", "");
+            break;
+        // 1 = Victim
+        case 1:
+            document.getElementById("prefix-text-field").value = victimValueText;
+            document.getElementById("text-x-axis").value = victimValueX;
+            document.getElementById("text-y-axis").value = 133 - victimValueY;
+            document.getElementById("bold-toggle").checked = victimFontStyle.includes("bold");
+            document.getElementById("italic-toggle").checked = victimFontStyle.includes("italic");
+            document.getElementById("font").value = victimFontType;
+            document.getElementById("font-size-slider").value = victimFontSize.replace("px", "");
+            break;
+        // 2 = Prompt
+        case 2:
+            document.getElementById("prefix-text-field").value = promptValueText;
+            document.getElementById("text-x-axis").value = promptValueX + promptWidth / 2;
+            document.getElementById("text-y-axis").value = promptValueY + promptHeight / 2;
+            document.getElementById("bold-toggle").checked = promptFontStyle.includes("bold");
+            document.getElementById("italic-toggle").checked = promptFontStyle.includes("italic");
+            document.getElementById("font").value = promptFontType;
+            document.getElementById("font-size-slider").value = promptFontSize;
+            break;
+    }
+}
