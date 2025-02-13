@@ -251,12 +251,12 @@ const addTextToCanvas = (font, text, coords) => {
 const setCanvasImg = (murderName, victimName, prompt) => {
     clearCanvasImg();
 
-    addTextToCanvas(murdererFontStyle + " " + murdererFontSize + " " + murdererFontType, murdererValueText + murderName, [murdererValueX, murdererValueY])
+    addTextToCanvas(murdererFontStyle + " " + murdererFontSize + " " + murdererFontType, murdererValueText + murderName, [murdererValueX, 133 - murdererValueY])
 
     if (prompt !== "") {
         const { height } = drawText(ctx, promptValueText + prompt, {
             x: Number(promptValueX),
-            y: Number(promptValueY),
+            y: 133 - Number(promptValueY),
             width: promptWidth,
             height: promptHeight,
             font: promptFontType,
@@ -268,13 +268,13 @@ const setCanvasImg = (murderName, victimName, prompt) => {
         })
     }
     
-    addTextToCanvas(victimFontStyle + " " + victimFontSize + " " + victimFontType, victimValueText + victimName, [victimValueX, victimValueY])
+    addTextToCanvas(victimFontStyle + " " + victimFontSize + " " + victimFontType, victimValueText + victimName, [victimValueX, 133 - victimValueY])
 }
 
 const { drawText, getTextHeight, splitText } = window.canvasTxt;
 
-var promptWidth = 280;
-var promptHeight = 50;
+const promptWidth = 280;
+const promptHeight = 50;
 
 const defaultCanvas = () => {
     adjustedCanvas();
@@ -286,7 +286,7 @@ const adjustedCanvas = () => {
         case 0:
             murdererValueText = document.getElementById("prefix-text-field").value;
             murdererValueX = document.getElementById("text-x-axis").value;
-            murdererValueY = 133 - document.getElementById("text-y-axis").value;
+            murdererValueY = document.getElementById("text-y-axis").value;
             murdererFontStyle = (document.getElementById("bold-toggle").checked ? "bold " : "") + (document.getElementById("italic-toggle").checked ? "italic " : "");
             murdererFontType = document.getElementById("font").value;
             murdererFontSize = document.getElementById("font-size-slider").value +"px";
@@ -295,7 +295,7 @@ const adjustedCanvas = () => {
         case 1:
             victimValueText = document.getElementById("prefix-text-field").value;
             victimValueX = document.getElementById("text-x-axis").value;
-            victimValueY = 133 - document.getElementById("text-y-axis").value;
+            victimValueY = document.getElementById("text-y-axis").value;
             victimFontStyle = (document.getElementById("bold-toggle").checked ? "bold " : "") + (document.getElementById("italic-toggle").checked ? "italic " : "");
             victimFontType = document.getElementById("font").value;
             victimFontSize = document.getElementById("font-size-slider").value + "px";
@@ -303,8 +303,8 @@ const adjustedCanvas = () => {
         // 2 = Prompt
         case 2:
             promptValueText = document.getElementById("prefix-text-field").value;
-            promptValueX = document.getElementById("text-x-axis").value - promptWidth / 2;
-            promptValueY = 133 - document.getElementById("text-y-axis").value - promptHeight / 2;
+            promptValueX = document.getElementById("text-x-axis").value - (promptWidth / 2);
+            promptValueY = Number(document.getElementById("text-y-axis").value) + (promptHeight / 2);
             promptFontStyle = (document.getElementById("bold-toggle").checked ? "bold " : "") + (document.getElementById("italic-toggle").checked ? "italic " : "");
             promptFontType = document.getElementById("font").value;
             promptFontSize = document.getElementById("font-size-slider").value;
@@ -314,31 +314,42 @@ const adjustedCanvas = () => {
 }
 
 const resetSlider = (slider) => {
-    slider.value = slider.getAttribute("default");
+    if (currentlyAdjusting == 0) {
+        slider.value = slider.getAttribute("defaultM");
+    }
+    else if (currentlyAdjusting == 1) {
+        slider.value = slider.getAttribute("defaultV");
+    }
+    else if (currentlyAdjusting == 2) {
+        slider.value = Number(slider.getAttribute("defaultP") - (promptHeight / 2));
+    }
     adjustedCanvas();
 }
 
 let currentlyAdjusting = 0;
 let murdererValueText = "";
 let murdererValueX = c.width / 2;
-let murdererValueY = 133 - 103;
+let murdererValueY = 103;
 let murdererFontStyle = "bold";
 let murdererFontType = "Arial";
 let murdererFontSize = "14px";
 let victimValueText = "Opfer: ";
 let victimValueX = c.width / 2;
-let victimValueY = 133 - 18;
+let victimValueY = 18;
 let victimFontStyle = "bold";
 let victimFontType = "Arial";
 let victimFontSize = "14px";
 let promptValueText = "";
-let promptValueX = c.width / 2 - promptWidth / 2;
-let promptValueY = 70 - promptHeight / 2;
+let promptValueX = (c.width / 2) - (promptWidth / 2);
+let promptValueY = 62 + (promptHeight / 2);
 let promptFontStyle = "";
 let promptFontType = "Arial";
 let promptFontSize = 12;
 
 document.getElementById("text-x-axis").value = murdererValueX;
+document.getElementById("text-y-axis").setAttribute("defaultM", murdererValueY);
+document.getElementById("text-y-axis").setAttribute("defaultV", victimValueY);
+document.getElementById("text-y-axis").setAttribute("defaultP", promptValueY);
 defaultCanvas();
 
 const switchAdjustingText = (btn) => {
@@ -358,7 +369,7 @@ const switchAdjustingText = (btn) => {
         case 0:
             document.getElementById("prefix-text-field").value = murdererValueText;
             document.getElementById("text-x-axis").value = murdererValueX;
-            document.getElementById("text-y-axis").value = 133 - murdererValueY;
+            document.getElementById("text-y-axis").value = murdererValueY;
             document.getElementById("bold-toggle").checked = murdererFontStyle.includes("bold");
             document.getElementById("italic-toggle").checked = murdererFontStyle.includes("italic");
             document.getElementById("font").value = murdererFontType;
@@ -368,7 +379,7 @@ const switchAdjustingText = (btn) => {
         case 1:
             document.getElementById("prefix-text-field").value = victimValueText;
             document.getElementById("text-x-axis").value = victimValueX;
-            document.getElementById("text-y-axis").value = 133 - victimValueY;
+            document.getElementById("text-y-axis").value = victimValueY;
             document.getElementById("bold-toggle").checked = victimFontStyle.includes("bold");
             document.getElementById("italic-toggle").checked = victimFontStyle.includes("italic");
             document.getElementById("font").value = victimFontType;
@@ -377,8 +388,8 @@ const switchAdjustingText = (btn) => {
         // 2 = Prompt
         case 2:
             document.getElementById("prefix-text-field").value = promptValueText;
-            document.getElementById("text-x-axis").value = promptValueX + promptWidth / 2;
-            document.getElementById("text-y-axis").value = promptValueY + promptHeight / 2;
+            document.getElementById("text-x-axis").value = promptValueX + (promptWidth / 2);
+            document.getElementById("text-y-axis").value = promptValueY - (promptHeight / 2);
             document.getElementById("bold-toggle").checked = promptFontStyle.includes("bold");
             document.getElementById("italic-toggle").checked = promptFontStyle.includes("italic");
             document.getElementById("font").value = promptFontType;
