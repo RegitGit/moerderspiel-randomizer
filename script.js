@@ -289,7 +289,7 @@ const adjustedCanvas = () => {
             murdererValueY = document.getElementById("text-y-axis").value;
             murdererFontStyle = (document.getElementById("bold-toggle").checked ? "bold " : "") + (document.getElementById("italic-toggle").checked ? "italic " : "");
             murdererFontType = document.getElementById("font").value;
-            murdererFontSize = document.getElementById("font-size-slider").value +"px";
+            murdererFontSize = document.getElementById("font-size-slider").value + "px";
             break;
         // 1 = Victim
         case 1:

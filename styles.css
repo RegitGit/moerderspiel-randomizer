@@ -1,7 +1,13 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+    background-color:dimgrey;
 }
+
+textarea {
+    resize: none;
+}
+
 .flex-div {
     display: flex;
 }
@@ -9,6 +15,7 @@ body {
 #name-column {
     display: flex;
     flex-direction: column;
+    width: 50%;
 }
 
 .flex-column {
@@ -37,6 +44,7 @@ body {
 }
 
 #prompt-container {
+    width: 50%;
     padding-left: 10px;
     border-color: black;
     border-left: solid 2px;
@@ -44,14 +52,25 @@ body {
 
 #prompt-input {
     margin-top: 5px;
+    flex: 1 1 auto;
+    min-width: 100%;
     min-height: 80px;
-    height: 100%;
-    min-width: 300px;
+}
+
+#randomize-div {
+    margin-top: 40px;
 }
 
 #myCanvas {
+    margin-left: auto;
     margin-right: 10px;
     height: 133px;
+    background-color: white;
+}
+
+#adjust-div {
+    display: inline-flex;
+    margin-right: auto;
 }
 
 #text-x-axis {
@@ -79,10 +98,13 @@ body {
     margin-right: 10px;
 }
 table th:first-child, table td:first-child {
-    width: 30px;
+    width: 22px;
     text-align: center;
 }
 table {
+    table-layout: fixed;
+    background-color: white;
+    box-shadow: 2px 2px 5px black;
     border-collapse: collapse;
     margin-top: 20px;
     width: 100%;
@@ -91,8 +113,11 @@ table, th, td {
     border: 1px solid black;
 }
 th, td {
-    padding: 10px;
+    padding: 8px;
     text-align: left;
+}
+td {
+    overflow: auto;
 }
 #table-container {
     margin-top: 20px;
@@ -107,16 +132,108 @@ th, td {
     display: table;
   }
 .rotation-wrapper-inner {
-padding: 50% 0;
-height: 0;
+    padding: 50% 0;
+    height: 0;
 }
 
 #text-y-axis {
     display: block;
     transform-origin: top left;
-  /* Note: for a CLOCKWISE rotation, use the commented-out
+    /* Note: for a CLOCKWISE rotation, use the commented-out
      transform instead of this one. */
-  transform: rotate(-90deg) translate(-100%);
-  /* transform: rotate(90deg) translate(0, -100%); */
-  margin-top: -50%;
+    transform: rotate(-90deg) translate(-100%);
+    /* transform: rotate(90deg) translate(0, -100%); */
+    margin-top: -50%;
+}
+
+#generate-div {
+    width: fit-content;
+    margin: auto;
+    margin-top: 10px;
+    padding-bottom: 15px;
+    border-bottom: 2px dashed black;
+    padding-top: 15px;
+    border-top: 2px dashed black;
+}
+
+input {
+    vertical-align: middle;
+}
+
+
+#center-div {
+    margin: auto;
+    width: 80%;
+    border: 2px solid navy;
+    border-radius: 10px;
+    background-color: aliceblue;
+    box-shadow: 10px 10px 10px 6px black;
+    padding: 5px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+h2 {
+    padding-top: 15px;
+    border-top: 2px dashed black;
+}
+
+#name-column {
+    width: 50%;
+}
+
+#prompt-container {
+    width: 50%;
+}
+
+#randomize-div {
+    width: fit-content;
+    margin: auto;
+    margin-top: 50px;
+}
+
+@media only screen and (max-width: 950px) {
+    #adjust-flex {
+        flex-direction: column;
+    }
+    #myCanvas {
+        margin: auto;
+        margin-bottom: 5px;
+    }
+    #adjust-div {
+        margin: auto;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .flex-div {
+        flex-direction: column;
+    }
+    #name-column {
+        margin: auto;
+        width: 70%;
+    }
+    .name-field {
+        width: 100%;
+    }
+    #prompt-container {
+        margin: auto;
+        padding-left: 0px;
+        padding-top: 10px;
+        border-left: none;
+        border-top: solid 2px;
+        width: 70%;
+    }
+    #prompt-container > .flex-div {
+        flex-direction: row;
+    }
+    #prompt-input {
+        width: 100%;
+    }
+
+    #randomize-div {
+        margin-top: 30px;
+    }
 }

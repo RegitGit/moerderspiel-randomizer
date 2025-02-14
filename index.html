@@ -9,93 +9,101 @@
     <script src="//unpkg.com/canvas-txt"></script>
 </head>
 <body>
-    <h1>Mörderspiel Opfer ohne Kreise</h1>
+    <div id="center-div">
 
-    <div class="flex-div">
-        <div id="name-column">
-            <div class="name-container">
-                <input type="text" class="name-field" placeholder="Name hinzufügen" oninput="handleNameInput()">
-                <button tabindex="-1" onclick="deleteNameField(this)">X</button>
+        <h1>Mörderspiel Opfer ohne Kreise</h1>
+        
+        <div class="flex-div">
+            <div id="name-column">
+                <div class="name-container">
+                    <input type="text" class="name-field" placeholder="Name hinzufügen" oninput="handleNameInput()">
+                    <button tabindex="-1" onclick="deleteNameField(this)">X</button>
+                </div>
+            </div>
+            <div id="prompt-container">
+                <div class="flex-div">
+                    <div id="prompt-headline">Aufgaben Seperator:</div>
+                    <input type="text" id="seperator-input" placeholder="Wähle Seperator" value=";">
+                </div>
+                <div class="flex-column">
+                    <textarea id="prompt-input"></textarea>
+                    <a href="#" id="save-prompt-button" onclick="savePromptFile()">Save</a>
+                </div>
             </div>
         </div>
-        <div id="prompt-container">
-            <div class="flex-div">
-                <div id="prompt-headline">Aufgaben Seperator:</div>
-                <input type="text" id="seperator-input" placeholder="Wähle Seperator" value=";">
-            </div>
-            <div class="flex-column">
-                <textarea id="prompt-input"></textarea>
-                <a href="#" id="save-prompt-button" onclick="savePromptFile()">Save</a>
-            </div>
+        <div id="randomize-div">
+            <button id="randomizeButton" onclick="randomizeNames()" disabled>Randomisieren</button>
+            <label>
+                <input type="checkbox" id="visibility-toggle" onchange="setTableVisibility(this.checked)"> Tabelle anzeigen
+            </label>
         </div>
-    </div>
-
-    <button id="randomizeButton" onclick="randomizeNames()" disabled>Randomisieren</button>
-    <label>
-        <input type="checkbox" id="visibility-toggle" onchange="setTableVisibility(this.checked)"> Tabelle anzeigen
-    </label>
-
-    <div id="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Mörder</th>
-                    <th>Opfer</th>
-                    <th>Aufgabe</th>
-                </tr>
-            </thead>
-            <tbody id="table-body" class="hide-table"></tbody>
-        </table>
-    </div>
-
-    <h2>PDF Generierung</h2>
-    <div class="flex-row">
-        <canvas id="myCanvas" width="350" height="133"></canvas>
-        <div id="adjust-parent" class="flex-column">
-            Text anpassen:
-            <button id="murderer-adjust-btn" disabled caseId="0" onclick="switchAdjustingText(this)">Mörder</button>
-            <button id="prompt-adjust-btn" caseId="2" onclick="switchAdjustingText(this)">Aufgabe</button>
-            <button id="victim-adjust-btn" caseId="1" onclick="switchAdjustingText(this)">Opfer</button>
+        
+        <div id="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Mörder</th>
+                        <th>Opfer</th>
+                        <th>Aufgabe</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body" class="hide-table"></tbody>
+            </table>
         </div>
-        <div class="flex-column">
-            <input type="text" id="prefix-text-field" placeholder="Präfix eingeben" oninput="adjustedCanvas()">
-            <select name="font" id="font" onchange="adjustedCanvas()">
-                <option value="Arial">Arial</option>
-                <option value="Verdana">Verdana</option>
-                <option value="Trebuchet MS">Trebuchet MS</option>
-                <option value="Times New Roman">Times New Roman</option>
-                <option value="Georgia">Georgia</option>
-                <option value="Garamond">Garamond</option>
-                <option value="Courier New">Courier New</option>
-                <option value="Brush Script MT">Brush Script MT</option>
-              </select>
-              <label>    
-                  Schriftgröße <input type="range" min="4" max="40" value="14" defaultM="14" defaultV="14" defaultP="12" class="slider" id="font-size-slider" oninput="adjustedCanvas()" ondblclick="resetSlider(this)">
-              </label>
-              <div class="flex-row">
-                <label>
-                  <input type="checkbox" id="bold-toggle" checked="true" onchange="adjustedCanvas()"> fett
-                </label>
-                <label>
-                  <input type="checkbox" id="italic-toggle" onchange="adjustedCanvas()"> kursiv
-                </label>
-              </div>
-              <div class="flex-row">
-                <input type="range" min="0" max="350" value="175" defaultM="175" defaultV="175" defaultP="175" class="slider" id="text-x-axis" oninput="adjustedCanvas()" ondblclick="resetSlider(this)">
-                <div class="rotation-wrapper-outer">
-                    <div class="rotation-wrapper-inner">
-                <input type="range" min="0" max="133" value="103" defaultM="103" defaultV="18" defaultP="45" class="slider" id="text-y-axis" oninput="adjustedCanvas()" ondblclick="resetSlider(this)">
+        
+        <h2>PDF Generierung</h2>
+        <div id="adjust-flex" class="flex-row">
+            <canvas id="myCanvas" width="350" height="133"></canvas>
+            <div id="adjust-div">
+                <div id="adjust-parent" class="flex-column">
+                    Text anpassen:
+                    <button id="murderer-adjust-btn" disabled caseId="0" onclick="switchAdjustingText(this)">Mörder</button>
+                    <button id="prompt-adjust-btn" caseId="2" onclick="switchAdjustingText(this)">Aufgabe</button>
+                    <button id="victim-adjust-btn" caseId="1" onclick="switchAdjustingText(this)">Opfer</button>
+                </div>
+                <div class="flex-column">
+                    <input type="text" id="prefix-text-field" placeholder="Präfix eingeben" oninput="adjustedCanvas()">
+                    <select name="font" id="font" onchange="adjustedCanvas()">
+                        <option value="Arial">Arial</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Trebuchet MS">Trebuchet MS</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Garamond">Garamond</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Brush Script MT">Brush Script MT</option>
+                    </select>
+                    <label>    
+                        Schriftgröße <input type="range" min="4" max="40" value="14" defaultM="14" defaultV="14" defaultP="12" class="slider" id="font-size-slider" oninput="adjustedCanvas()" ondblclick="resetSlider(this)">
+                    </label>
+                    <div class="flex-row">
+                        <label>
+                            <input type="checkbox" id="bold-toggle" checked="true" onchange="adjustedCanvas()"> fett
+                        </label>
+                        <label>
+                            <input type="checkbox" id="italic-toggle" onchange="adjustedCanvas()"> kursiv
+                        </label>
+                    </div>
+                    <div class="flex-row">
+                        <input type="range" min="0" max="350" value="175" defaultM="175" defaultV="175" defaultP="175" class="slider" id="text-x-axis" oninput="adjustedCanvas()" ondblclick="resetSlider(this)">
+                        <div class="rotation-wrapper-outer">
+                            <div class="rotation-wrapper-inner">
+                                <input type="range" min="0" max="133" value="103" defaultM="103" defaultV="18" defaultP="45" class="slider" id="text-y-axis" oninput="adjustedCanvas()" ondblclick="resetSlider(this)">
+                            </div>
+                        </div>
                     </div>
                 </div>
-              </div>
+            </div>
+        </div>
+        <div id="generate-div">
+            <label>
+                <input type="checkbox" id="mirrored-toggle" onchange="toggleDoublesided()"> Rückseite generieren
+            </label>
+            <button id="generate-btn" disabled title="Randomisiere zuerst die Namen!" onclick="generatePDF()">Generiere PDF</button>
         </div>
     </div>
-    <label>
-        <input type="checkbox" id="mirrored-toggle" onchange="toggleDoublesided()"> Rückseite generieren
-    </label>
-    <button id="generate-btn" disabled title="Randomisiere zuerst die Namen!" onclick="generatePDF()">Generiere PDF</button>
-
+    
     <script src="script.js"></script>
 </body>
 </html>
