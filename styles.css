@@ -1,7 +1,18 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-    background-color:dimgrey;
+    background-color:rgb(20, 22, 23);
+    color: rgb(204, 194, 175);
+    ;
+}
+
+input {
+    accent-color: rgb(95, 197, 240);
+}
+
+input[type=text], textarea {
+    color: rgb(232, 230, 227);
+    background-color: rgb(32, 35, 36);
 }
 
 textarea {
@@ -11,6 +22,7 @@ textarea {
 .flex-div {
     display: flex;
 }
+
 
 #name-column {
     display: flex;
@@ -103,7 +115,8 @@ table th:first-child, table td:first-child {
 }
 table {
     table-layout: fixed;
-    background-color: white;
+    color: rgb(232, 230, 227);
+    background-color: rgb(56, 57, 59);
     box-shadow: 2px 2px 5px black;
     border-collapse: collapse;
     margin-top: 20px;
@@ -151,33 +164,39 @@ td {
     margin: auto;
     margin-top: 10px;
     padding-bottom: 15px;
-    border-bottom: 2px dashed black;
+    border-bottom: 2px dashed rgb(204, 194, 175);
     padding-top: 15px;
-    border-top: 2px dashed black;
+    border-top: 2px dashed rgb(204, 194, 175);
 }
 
 input {
     vertical-align: middle;
 }
 
+select {
+    color: rgb(232, 230, 227);
+    background-color: rgb(87, 87, 88);
+}
+
 
 #center-div {
     margin: auto;
     width: 80%;
-    border: 2px solid navy;
+    border: 2px solid rgb(103, 96, 85);
     border-radius: 10px;
-    background-color: aliceblue;
+    background-color: rgb(39, 42, 44);
     box-shadow: 10px 10px 10px 6px black;
     padding: 5px;
 }
 
 h1, h2 {
+    color: rgb(119, 174, 198);
     text-align: center;
 }
 
 h2 {
     padding-top: 15px;
-    border-top: 2px dashed black;
+    border-top: 2px dashed rgb(204, 194, 175);
 }
 
 #name-column {
@@ -192,6 +211,48 @@ h2 {
     width: fit-content;
     margin: auto;
     margin-top: 50px;
+}
+
+.big-button {
+    color: white;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(153, 129, 0);
+    padding: 15px;
+    transition: 0.3s;
+}
+
+.big-button:hover:disabled {
+    cursor: not-allowed;
+}
+
+.big-button:hover:enabled {
+    cursor: pointer;
+    background-color: rgb(136, 116, 0);
+}
+
+.select-button {
+    color: rgb(255, 255, 255);
+    border-radius: 2px;
+    background-color: rgb(195, 167, 12);
+    border-color: rgb(232, 230, 227);
+}
+
+.select-button:disabled {
+    color: rgb(43, 37, 2);
+    background-color: rgb(134, 115, 8);
+    border-color: rgb(158, 158, 150);
+}
+
+a {
+    text-decoration: none;
+    color: rgb(43, 79, 255);
+    text-align: middle;
+    width: fit-content;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(49, 53, 56);
+    padding: 4px;
 }
 
 @media only screen and (max-width: 950px) {

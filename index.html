@@ -32,7 +32,7 @@
             </div>
         </div>
         <div id="randomize-div">
-            <button id="randomizeButton" onclick="randomizeNames()" disabled>Randomisieren</button>
+            <button class="big-button" id="randomizeButton" onclick="randomizeNames()" disabled>Randomisieren</button>
             <label>
                 <input type="checkbox" id="visibility-toggle" onchange="setTableVisibility(this.checked)"> Tabelle anzeigen
             </label>
@@ -58,9 +58,9 @@
             <div id="adjust-div">
                 <div id="adjust-parent" class="flex-column">
                     Text anpassen:
-                    <button id="murderer-adjust-btn" disabled caseId="0" onclick="switchAdjustingText(this)">Mörder</button>
-                    <button id="prompt-adjust-btn" caseId="2" onclick="switchAdjustingText(this)">Aufgabe</button>
-                    <button id="victim-adjust-btn" caseId="1" onclick="switchAdjustingText(this)">Opfer</button>
+                    <button class="select-button" id="murderer-adjust-btn" disabled caseId="0" onclick="switchAdjustingText(this)">Mörder</button>
+                    <button class="select-button" id="prompt-adjust-btn" caseId="2" onclick="switchAdjustingText(this)">Aufgabe</button>
+                    <button class="select-button" id="victim-adjust-btn" caseId="1" onclick="switchAdjustingText(this)">Opfer</button>
                 </div>
                 <div class="flex-column">
                     <input type="text" id="prefix-text-field" placeholder="Präfix eingeben" oninput="adjustedCanvas()">
@@ -100,7 +100,7 @@
             <label>
                 <input type="checkbox" id="mirrored-toggle" onchange="toggleDoublesided()"> Rückseite generieren
             </label>
-            <button id="generate-btn" disabled title="Randomisiere zuerst die Namen!" onclick="generatePDF()">Generiere PDF</button>
+            <button class="big-button" id="generate-btn" disabled title="Randomisiere zuerst die Namen!" onclick="generatePDF()">Generiere PDF</button>
         </div>
     </div>
     
