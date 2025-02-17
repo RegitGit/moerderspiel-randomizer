@@ -23,6 +23,11 @@ textarea {
     display: flex;
 }
 
+#name-headline {
+    margin-bottom: 5px;
+    text-decoration: underline;
+}
+
 
 #name-column {
     display: flex;
@@ -47,7 +52,18 @@ textarea {
     flex-direction: row;
 }
 
+.delete-button {
+    color: rgb(230, 230, 230);
+    border-radius: 2px;
+    background-color: rgb(195, 167, 12);
+    border-color: rgb(132, 124, 112);
+}
+
 #prompt-headline {
+    text-decoration: underline;
+}
+
+#prompt-headline, #prompt-headline-2 {
     margin-right: 10px;
 }
 
@@ -219,6 +235,7 @@ h2 {
     border: none;
     background-color: rgb(153, 129, 0);
     padding: 15px;
+    box-shadow: 1px 1px 0px 1px black;
     transition: 0.3s;
 }
 
@@ -229,6 +246,10 @@ h2 {
 .big-button:hover:enabled {
     cursor: pointer;
     background-color: rgb(136, 116, 0);
+}
+
+.big-button:active {
+    box-shadow: none;
 }
 
 .select-button {
@@ -253,6 +274,11 @@ a {
     border: none;
     background-color: rgb(49, 53, 56);
     padding: 4px;
+}
+
+#name-backside-toggle {
+    margin-left: 15px;
+    opacity: 0.5;
 }
 
 @media only screen and (max-width: 950px) {

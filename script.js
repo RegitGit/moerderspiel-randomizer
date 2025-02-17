@@ -21,6 +21,7 @@ const handleNameInput = () => {
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'X';
         deleteButton.tabIndex = "-1";
+        deleteButton.classList.add("delete-button");
         deleteButton.onclick = () => deleteNameField(deleteButton);
         newContainer.appendChild(deleteButton);
 
@@ -173,6 +174,7 @@ const generatePDF = () => {
 
     const table = document.getElementById("table-body");
 
+    let murderNames = [];
     // Murderer Text
     ctx.font = "bold " + murdererFontSize + " Arial";
     ctx.textAlign = "center";
@@ -189,6 +191,7 @@ const generatePDF = () => {
         var prompt = "";
         const tr = table.children[i];
         murderName = tr.children[1].innerHTML;
+        murderNames.push(murderName);
         victimName = tr.children[2].innerHTML;
         prompt = tr.children[3].innerHTML;
 
@@ -198,7 +201,7 @@ const generatePDF = () => {
         pdf.addImage(imgData, "PNG", 12 + (92 * ((i % 16) % 2)), 8 + 35 * Math.floor((i % 16) / 2));
     }
     if (doublesided) {
-        addBackside(pdf, names.length);
+        addBackside(pdf, murderNames);
     }
     else {
         clearCanvasImg();
@@ -211,7 +214,26 @@ var doublesided = false;
 
 const toggleDoublesided = () => {
     doublesided = !doublesided;
+    let parent = document.getElementById("name-backside-toggle");
+    parent.children[0].disabled = !doublesided;
+    
+    if (doublesided) {
+    parent.style.opacity = "1";
+
+    }
+    else {
+        parent.style.opacity = "0.5";
+        parent.children[0].checked = false;
+    }
+
 }
+
+var nameOnBackside = false;
+
+const toggleBacksideName = () => {
+    nameOnBackside = !nameOnBackside;
+}
+
 
 const getPrompts = () => {
     const seperator = document.getElementById("seperator-input").value;
@@ -227,12 +249,17 @@ const getPrompts = () => {
     return allPrompts;
 }
 
-const addBackside = (pdf, rectAmount) => {
+const addBackside = (pdf, murderNames) => {
     pdf.addPage();
     clearCanvasImg();
     var imgData = c.toDataURL("image/png");
-    for (var d = 0; d < rectAmount; d++) {
+    for (var d = 0; d < murderNames.length; d++) {
+        if (nameOnBackside) {
+            addTextToCanvas(murdererFontStyle + " " + murdererFontSize + " " + murdererFontType, murdererValueText + murderNames[d], [murdererValueX, 133 - murdererValueY])
+            imgData = c.toDataURL("image/png");
+        }
         pdf.addImage(imgData, "PNG", 12 + (92 * (((d % 16) + 1) % 2)), 8 + 35 * Math.floor((d % 16) / 2));
+        if (nameOnBackside) clearCanvasImg();
     }
 }
 

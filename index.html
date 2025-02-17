@@ -15,18 +15,20 @@
         
         <div class="flex-div">
             <div id="name-column">
+                <div id="name-headline">Namen</div>
                 <div class="name-container">
                     <input type="text" class="name-field" placeholder="Name hinzufügen" oninput="handleNameInput()">
-                    <button tabindex="-1" onclick="deleteNameField(this)">X</button>
+                    <button class="delete-button" tabindex="-1" onclick="deleteNameField(this)">X</button>
                 </div>
             </div>
             <div id="prompt-container">
                 <div class="flex-div">
-                    <div id="prompt-headline">Aufgaben Seperator:</div>
+                    <div id="prompt-headline">Aufgaben</div>
+                    <div id="prompt-headline-2">Seperator: </div>
                     <input type="text" id="seperator-input" placeholder="Wähle Seperator" value=";">
                 </div>
                 <div class="flex-column">
-                    <textarea id="prompt-input"></textarea>
+                    <textarea id="prompt-input" placeholder="(Bsp.:) Befinde dich alleine mit deinem Opfer in einem Raum; Banane; Münze; Schüttele die Hand deines Opfers"></textarea>
                     <a href="#" id="save-prompt-button" onclick="savePromptFile()">Save</a>
                 </div>
             </div>
@@ -96,10 +98,15 @@
                 </div>
             </div>
         </div>
-        <div id="generate-div">
-            <label>
-                <input type="checkbox" id="mirrored-toggle" onchange="toggleDoublesided()"> Rückseite generieren
-            </label>
+        <div id="generate-div" class="flex-row">
+            <div class="flex-column">
+                <label>
+                    <input type="checkbox" id="mirrored-toggle" onchange="toggleDoublesided()"> Rückseite generieren
+                </label>
+                <label id="name-backside-toggle">
+                    <input type="checkbox" onchange="toggleBacksideName()" disabled> Mördername auf Rückseite
+                </label>
+            </div>
             <button class="big-button" id="generate-btn" disabled title="Randomisiere zuerst die Namen!" onclick="generatePDF()">Generiere PDF</button>
         </div>
     </div>
