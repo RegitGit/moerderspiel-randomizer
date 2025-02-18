@@ -85,6 +85,25 @@ textarea {
     min-height: 80px;
 }
 
+#load-container {
+    display:inline-flex;
+    flex-wrap: wrap;
+}
+
+.load-btn {
+    color: rgb(43, 255, 68);
+    text-align: middle;
+    border-radius: 4px;
+    height: fit-content;
+    width: fit-content;
+    max-width: 120px;
+    overflow: hidden;
+    background-color: rgb(49, 53, 56);
+    border-color: rgb(87, 94, 100);
+    padding: 3px;
+    margin: 2px;
+}
+
 #randomize-div {
     margin-top: 40px;
 }
@@ -269,11 +288,14 @@ a {
     text-decoration: none;
     color: rgb(43, 79, 255);
     text-align: middle;
+    height: fit-content;
     width: fit-content;
     border-radius: 10px;
     border: none;
     background-color: rgb(49, 53, 56);
     padding: 4px;
+    margin-top: 1px;
+    margin-right: 2px;
 }
 
 #name-backside-toggle {

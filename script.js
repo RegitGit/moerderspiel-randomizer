@@ -147,19 +147,34 @@ const setTableVisibility = (isVisible) => {
 
 
 const savePromptFile = () => {
-        var fileName = "Aufgaben.txt";
-        var fileContent = "";
-        var myFile;
-
-        var dlBtn = document.getElementById("save-prompt-button");
-        window.URL = window.URL || window.webkitURL;
-        fileContent = document.getElementById("prompt-input").value;
-        myFile = new Blob([fileContent], {type: 'text/plain'});
-        dlBtn.setAttribute("href", window.URL.createObjectURL(myFile));
-        dlBtn.setAttribute("download", fileName);
+        if (document.getElementById("prompt-input").value.trim() === "") {
+            return;
+        }
+        
+        let name = prompt("Speichere als:").trim();
+        if (name !== "" && name !== null) {
+            localStorage.setItem(name, document.getElementById("prompt-input").value);
+            const newLoadButton = document.createElement('button');
+            newLoadButton.innerHTML = name;
+            newLoadButton.className = 'load-btn';
+            document.getElementById('load-container').appendChild(newLoadButton);
+            newLoadButton.onclick = () => loadPromptFile(name);
+            newLoadButton.ondblclick = () => deletePromptFile(name);
+        }
     }
 
-    
+const loadPromptFile = (key) => {
+    let text = localStorage.getItem(key);
+    if (text !== null) {
+        document.getElementById('prompt-input').value = text;
+    }
+}
+
+const deletePromptFile = (key) => {
+    if(confirm("Soll " + key + " gelöscht werden?")) {
+        localStorage.removeItem(key);
+    }
+}
 
 
 
@@ -337,7 +352,7 @@ const adjustedCanvas = () => {
             promptFontSize = document.getElementById("font-size-slider").value;
             break;
     }
-    setCanvasImg("\"Mördername\"", "\"Opfername\"", "Hier steht die Aufgabe oder ein Gegenstand, falls sie existieren");
+    setCanvasImg("\"Mördername\"", "\"Opfername\"", "Hier steht die Aufgabe oder ein Gegenstand, falls welche zugeordnet sind");
 }
 
 const resetSlider = (slider) => {

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mörderspiel Namengenerator</title>
+    <title>Mörderspiel Generator</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.png">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
     <script src="//unpkg.com/canvas-txt"></script>
@@ -11,7 +12,7 @@
 <body>
     <div id="center-div">
 
-        <h1>Mörderspiel Opfer ohne Kreise</h1>
+        <h1>Mörderspiel mit Weitergeben</h1>
         
         <div class="flex-div">
             <div id="name-column">
@@ -23,13 +24,15 @@
             </div>
             <div id="prompt-container">
                 <div class="flex-div">
-                    <div id="prompt-headline">Aufgaben</div>
+                    <div id="prompt-headline">Optionale Aufgaben</div>
                     <div id="prompt-headline-2">Seperator: </div>
                     <input type="text" id="seperator-input" placeholder="Wähle Seperator" value=";">
                 </div>
                 <div class="flex-column">
                     <textarea id="prompt-input" placeholder="(Bsp.:) Befinde dich alleine mit deinem Opfer in einem Raum; Banane; Münze; Schüttele die Hand deines Opfers"></textarea>
-                    <a href="#" id="save-prompt-button" onclick="savePromptFile()">Save</a>
+                    <div id="load-container">
+                        <a href="#" id="save-prompt-button" onclick="savePromptFile()">Save</a>
+                    </div>
                 </div>
             </div>
         </div>
