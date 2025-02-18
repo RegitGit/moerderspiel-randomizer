@@ -290,12 +290,19 @@ h2 {
     text-align: middle;
     height: fit-content;
     width: fit-content;
-    border-radius: 10px;
     border: none;
+    border-color: rgb(103, 96, 85);
+    border-radius: 10px;
     background-color: rgb(49, 53, 56);
-    padding: 4px;
+    padding: 6px;
     margin-top: 1px;
     margin-right: 2px;
+}
+
+#save-prompt-button:hover {
+    cursor: pointer;
+    background-color: rgb(45, 49, 51);
+
 }
 
 #name-backside-toggle {
