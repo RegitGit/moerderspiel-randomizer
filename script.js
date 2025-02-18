@@ -147,21 +147,47 @@ const setTableVisibility = (isVisible) => {
 
 
 const savePromptFile = () => {
-        if (document.getElementById("prompt-input").value.trim() === "") {
-            return;
+    if (document.getElementById("prompt-input").value.trim() === "") {
+        return;
+    }
+    
+    let name = prompt("Speichere als:").trim();
+    if (name !== "" && name !== null) {
+        let nameFound = true;
+        let concat = "";
+        let x = 0;
+        while(nameFound) {
+            nameFound = nameAlreadyTaken(name + concat);
+            if (nameFound) {
+                concat = "";
+                x += 1;
+                concat += x;
+                console.log(concat)
+            }
+            else {
+                name += concat;
+            }
         }
-        
-        let name = prompt("Speichere als:").trim();
-        if (name !== "" && name !== null) {
-            localStorage.setItem(name, document.getElementById("prompt-input").value);
-            const newLoadButton = document.createElement('button');
-            newLoadButton.innerHTML = name;
-            newLoadButton.className = 'load-btn';
-            document.getElementById('load-container').appendChild(newLoadButton);
-            newLoadButton.onclick = () => loadPromptFile(name);
-            newLoadButton.ondblclick = () => deletePromptFile(name);
+        localStorage.setItem(name, document.getElementById("prompt-input").value);
+        const newLoadButton = document.createElement('button');
+        newLoadButton.innerHTML = name;
+        newLoadButton.className = 'load-btn';
+        document.getElementById('load-container').appendChild(newLoadButton);
+        newLoadButton.onclick = () => loadPromptFile(name);
+        newLoadButton.ondblclick = () => deletePromptFile(name);
+    }
+}
+
+const nameAlreadyTaken = (name) => {
+    let children = document.getElementById("load-container").children;
+    for (let i = 1; i < children.length; i++) {
+        console.log(children[i].innerHTML)
+        if(children[i].innerHTML == name) {
+            return true;
         }
     }
+    return false;
+}
 
 const loadPromptFile = (key) => {
     let text = localStorage.getItem(key);
@@ -173,6 +199,12 @@ const loadPromptFile = (key) => {
 const deletePromptFile = (key) => {
     if(confirm("Soll " + key + " gelöscht werden?")) {
         localStorage.removeItem(key);
+        let children = document.getElementById("load-container").children;
+        for (let i = 1; i < children.length; i++) {
+            if(children[i].innerHTML === key) {
+                children[i].remove();
+            }
+        }
     }
 }
 
