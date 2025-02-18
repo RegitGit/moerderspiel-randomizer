@@ -162,26 +162,37 @@ const savePromptFile = () => {
                 concat = "";
                 x += 1;
                 concat += x;
-                console.log(concat)
             }
             else {
                 name += concat;
             }
         }
         localStorage.setItem(name, document.getElementById("prompt-input").value);
-        const newLoadButton = document.createElement('button');
-        newLoadButton.innerHTML = name;
-        newLoadButton.className = 'load-btn';
-        document.getElementById('load-container').appendChild(newLoadButton);
-        newLoadButton.onclick = () => loadPromptFile(name);
-        newLoadButton.ondblclick = () => deletePromptFile(name);
+        createLoadElement(name);
     }
+}
+
+const createLoadElement = (name) => {
+    const newLoadButton = document.createElement('button');
+    newLoadButton.innerHTML = name;
+    newLoadButton.className = 'load-btn';
+    document.getElementById('load-container').appendChild(newLoadButton);
+    newLoadButton.onclick = () => loadPromptFile(name);
+    newLoadButton.ondblclick = () => deletePromptFile(name);
+}
+
+for (let i = 0; i < localStorage.length; i++) {
+    let item = localStorage.getItem(localStorage.key(i));
+
+    if (localStorage.key(i) === "loglevel" || item.charAt(0) === "\"" && item.substring(item.length - 3, item.length) === "==\"") {
+        continue;
+    }
+    createLoadElement(localStorage.key(i));     
 }
 
 const nameAlreadyTaken = (name) => {
     let children = document.getElementById("load-container").children;
     for (let i = 1; i < children.length; i++) {
-        console.log(children[i].innerHTML)
         if(children[i].innerHTML == name) {
             return true;
         }
