@@ -184,7 +184,7 @@ const createLoadElement = (name) => {
 for (let i = 0; i < localStorage.length; i++) {
     let item = localStorage.getItem(localStorage.key(i));
 
-    if (localStorage.key(i) === "loglevel" || item.charAt(0) === "\"" && item.substring(item.length - 3, item.length) === "==\"") {
+    if (localStorage.key(i) === "loglevel" || localStorage.key(i) === "debug" || item.charAt(0) === "\"" && item.substring(item.length - 3, item.length) === "==\"") {
         continue;
     }
     createLoadElement(localStorage.key(i));     
