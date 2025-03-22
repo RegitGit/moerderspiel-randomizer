@@ -282,6 +282,7 @@ const toggleDoublesided = () => {
     else {
         parent.style.opacity = "0.5";
         parent.children[0].checked = false;
+        nameOnBackside = false;
     }
 
 }
