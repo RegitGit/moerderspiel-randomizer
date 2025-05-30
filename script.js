@@ -1,6 +1,5 @@
 //const { default: jsPDF } = require("jspdf");
 
-
 let isTableVisible = false;
 
 const handleNameInput = () => {
