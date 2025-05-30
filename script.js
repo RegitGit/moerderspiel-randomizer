@@ -223,6 +223,7 @@ const deletePromptFile = (key) => {
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 
+window.jsPDF = window.jspdf.jsPDF;
 // PDF GENERATION
 const generatePDF = () => {
     const pdf = new jsPDF();
